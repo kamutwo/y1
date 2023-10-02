@@ -1,5 +1,0 @@
-class event {
-	constructor() {
-		super({})
-	}
-}

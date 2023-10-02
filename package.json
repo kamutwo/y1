@@ -2,9 +2,9 @@
   "name": "kofi",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node --env-file .env"
   },
   "repository": {
     "type": "git",
@@ -13,16 +13,11 @@
   "author": "youtwo_",
   "license": "MIT",
   "devDependencies": {
-    "@typescript-eslint/parser": "^6.7.0",
     "dotenv": "^16.3.1",
-    "eslint": "^8.49.0",
-    "prettier": "^3.0.3",
-    "typescript": "^5.2.2"
+    "eslint": "^8.49.0"
   },
   "dependencies": {
-    "@hono/node-server": "^1.1.1",
     "discord.js": "^14.13.0",
-    "glob": "^10.3.4",
-    "hono": "^3.6.0"
+    "glob": "^10.3.4"
   }
 }
