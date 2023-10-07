@@ -1,5 +1,5 @@
 {
-  "name": "kofi",
+  "name": "youone",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "github.com/KamuDua/Kofi"
+    "url": "github.com/KamuDua/y1"
   },
   "author": "youtwo_",
   "license": "MIT",

@@ -8,7 +8,7 @@ serve(app, (info) => {
 	console.log(`[Hono]: Listening on http://localhost:${info.port}`);
 });
 
-const manager = new ShardingManager('./src/Bot.js', { token: process.env.Token, totalShards: 'auto' });
+const manager = new ShardingManager('./src/bot.js', { token: process.env.DISCORD_TOKEN, totalShards: 'auto' });
 manager.on('shardCreate', (shard) => {
 	console.log(`[Shard]: Launched Shard ${shard.id} • ${new Date().toString()}`);
 });
