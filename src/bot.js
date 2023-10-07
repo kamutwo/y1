@@ -1,6 +1,6 @@
-(async () => {
-	const BotClient = require('./structures/BotClient');
+import BotClient from './structures/BotClient.js';
 
+(async () => {
 	const client = new BotClient({ intents: 3276543 });
 	await client.loadEvents();
 

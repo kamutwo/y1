@@ -1,6 +1,10 @@
-const { Client, Collection, Locale } = require('discord.js');
-const { resolve, basename } = require('path');
-const { glob } = require('glob');
+import { Client, Collection, Locale } from 'discord.js';
+import { join, dirname } from 'path';
+import { pathToFileURL } from 'url';
+import { glob } from 'glob';
+
+const moduleURL = new URL(import.meta.url);
+const __dirname = dirname(moduleURL.pathname);
 
 /**
  * @typedef {Object} Command
@@ -13,14 +17,22 @@ const { glob } = require('glob');
  * @property {boolean} [dmPermission] Whether the command is enabled in DMs
  * @property {boolean} [nsfw] Whether the command is age-restricted
  *
- * @property {Function} function The function of the command
+ * @property {Function} function The command function
+ */
+
+/**
+ * @typedef {Object} Event
+ * @property {string} eventName The name of the event
+ * @property {?boolean} once Whether the listener is destroyed after invoke
+ *
+ * @property {Function} listener The event listener
  */
 
 /**
  * The main hub for interacting with the Discord API, and the starting point for any bot.
  * @extends Client
  */
-class BotClient extends Client {
+export default class extends Client {
 	/**
 	 * @param {import('discord.js').ClientOptions} options  Options for the client
 	 */
@@ -44,35 +56,45 @@ class BotClient extends Client {
 	 * @returns {Promise<Collection<string,Event>>}
 	 */
 	async loadEvents() {
-		const files = await glob(`${resolve(__dirname, '../events').replace(/\\/g, '/')}/**/*.js`);
-		files.forEach((file) => {
-			delete require.cache[require.resolve(file)];
+		try {
+			const files = await glob(join(__dirname, '../events').replace(/\\/g, '/') + '/**/*.js');
 
-			const event = require(file);
-			if (event.once) {
-				this.once(event.eventName, event.listener);
-			}
-			else {
-				this.on(event.eventName, event.listener);
-			}
-			this.events.set(event.eventName, event);
-		});
-		return this.events;
+			files.forEach(async (file) => {
+				/**
+				 * @type {Event}
+				 */
+				const event = (await import(pathToFileURL(file))).default;
+				if (event.once) {
+					this.once(event.eventName, event.listener);
+				}
+				else {
+					this.on(event.eventName, event.listener);
+				}
+				this.events.set(event.eventName, event);
+			});
+			return this.events;
+		}
+		catch (err) {
+			console.log(`[Error]: ${err}`);
+		}
 	}
 
 	/**
 	 * @returns {Promise<Collection<string,Command>>}
 	 */
 	async loadCommands() {
-		const files = await glob(`${resolve(__dirname, '../commands').replace(/\\/g, '/')}/**/*.js`);
-		const appCommands = files.map((file) => {
-			delete require.cache[require.resolve(file)];
+		const files = await glob(join(__dirname, '../commands').replace(/\\/g, '/') + '/**/*.js');
+		const appCommands = [];
 
-			const command = this.constructor.transformCommand(require(file));
-			this.commands.set(basename(file), command);
+		for (const file of files) {
+			/**
+			 * @type {Command}
+			 */
+			const command = this.constructor.transformCommand((await import(pathToFileURL(file))).default);
+			this.commands.set(command.name, command);
 
-			return command;
-		});
+			appCommands.push(command);
+		}
 		await this.application?.commands.set(appCommands);
 
 		return this.commands;
@@ -97,5 +119,3 @@ class BotClient extends Client {
 		};
 	}
 }
-
-module.exports = BotClient;

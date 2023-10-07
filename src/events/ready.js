@@ -1,6 +1,6 @@
-const BotClient = require('../structures/BotClient');
+import BotClient from '../structures/BotClient.js';
 
-module.exports = {
+export default {
 	eventName: 'ready',
 	once: true,
 

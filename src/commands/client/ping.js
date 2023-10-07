@@ -1,13 +1,11 @@
-const CommandContext = require('../../structures/CommandContext');
-
-module.exports = {
+export default {
 	name: 'ping',
 	description: 'pong!!',
 
 	/**
-	 * @param {CommandContext} context
+	 * @param {import('discord.js').Interaction} interaction
 	 */
-	function: (context) => {
-		return context.reply('pong!');
+	function: (interaction) => {
+		return interaction.reply('pong!');
 	},
 };
