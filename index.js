@@ -13,3 +13,15 @@ manager.on('shardCreate', (shard) => {
 	console.log(`[Shard]: Launched Shard ${shard.id} • ${new Date().toString()}`);
 });
 manager.spawn();
+
+process.on('uncaughtException', (error, origin) => {
+	console.log(`[UncaughtException]: ${error, origin}`);
+});
+
+process.on('uncaughtExceptionMonitor', (error, origin) => {
+	console.log(`[UncaughtExceptionMonitor]: ${error, origin}`);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+	console.log(`[UnhandledRejection]: ${reason, promise}`);
+});
