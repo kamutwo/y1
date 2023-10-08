@@ -12,7 +12,7 @@ export default {
 
 		await message.channel.setTopic(`Bumped <t:${moment(message.createdAt).unix()}:R>; the next bump is <t:${moment(message.createdAt).add(2, 'hour').unix()}:R>`);
 		const interval = setInterval(async () => {
-			if (moment(Date().now()).unix() > moment(message.createdAt).add(2, 'hour').unix()) {
+			if (moment(Date.now()).unix() > moment(message.createdAt).add(2, 'hour').unix()) {
 				await message.channel.setTopic(`Bumped <t:${moment(message.createdAt).unix()}:R>; the next bump is **available**`);
 				clearInterval(interval);
 			}
