@@ -2,6 +2,7 @@ import { Client, Collection, Locale } from 'discord.js';
 import { join, dirname } from 'path';
 import { pathToFileURL } from 'url';
 import { glob } from 'glob';
+import Util from './Util.js';
 
 const moduleURL = new URL(import.meta.url);
 const __dirname = dirname(moduleURL.pathname);
@@ -50,6 +51,12 @@ export default class extends Client {
 		 * @type {Collection<string,Event>}
 		 */
 		this.events = new Collection();
+
+		/**
+		 * The bot utilities.
+		 * @type {Object}
+		 */
+		this.utils = Util;
 	}
 
 	/**
