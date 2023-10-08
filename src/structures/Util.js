@@ -10,19 +10,19 @@ function msToDuration(millisecond) {
 	const output = [];
 
 	if (duration.days() > 0) {
-		output.push(`${duration.days()} Day${duration.days() > 1 ? 's' : ''}`);
+		output.push(`${duration.days()}d`);
 	}
 
 	if (duration.hours() > 0) {
-		output.push(`${duration.hours()} Day${duration.hours() > 1 ? 's' : ''}`);
+		output.push(`${duration.hours()}h`);
 	}
 
 	if (duration.minutes() > 0) {
-		output.push(`${duration.minutes()} Day${duration.minutes() > 1 ? 's' : ''}`);
+		output.push(`${duration.minutes()}m`);
 	}
 
 	if (duration.seconds() > 0) {
-		output.push(`${duration.seconds()} Day${duration.seconds() > 1 ? 's' : ''}`);
+		output.push(`${duration.seconds()}s`);
 	}
 
 	return output.join(', ');

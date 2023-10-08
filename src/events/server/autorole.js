@@ -1,7 +1,7 @@
 import { GuildMember } from 'discord.js';
 
 export default {
-	eventName: 'messageCreate',
+	eventName: 'guildMemberAdd',
 
 	/**
 	 * @param {GuildMember} member
