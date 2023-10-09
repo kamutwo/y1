@@ -23,6 +23,7 @@
     "glob": "^10.3.4",
     "hono": "^3.7.5",
     "moment": "^2.29.4",
+    "node-fetch": "^3.3.2",
     "systeminformation": "^5.21.11"
   }
 }

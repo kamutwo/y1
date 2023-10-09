@@ -3,7 +3,7 @@ import { PermissionFlagsBits, SlashCommandStringOption, SlashCommandAttachmentOp
 export default {
 	name: 'say',
 	description: 'Make the bot say something',
-	option: [
+	options: [
 		new SlashCommandStringOption()
 			.setName('message')
 			.setDescription('The message to send.')
@@ -20,8 +20,8 @@ export default {
 	function: async (interaction) => {
 		await interaction.deferReply({ ephemeral: true });
 
-		const attachment = interaction.options.get('attachment');
-		await interaction.channel.send({ content: interaction.options.get('message'), files: attachment ? [attachment] : undefined });
+		const attachment = interaction.options.get('attachment')?.attachment;
+		await interaction.channel.send({ content: interaction.options.get('message')?.value, files: attachment ? [attachment] : undefined });
 
 		return await interaction.editReply({ content: 'sent!' });
 	},

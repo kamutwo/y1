@@ -1,5 +1,3 @@
-import { EmbedBuilder } from 'discord.js';
-
 export default {
 	eventName: 'interactionCreate',
 
@@ -13,7 +11,12 @@ export default {
 			const command = interaction.client.commands.get(interaction.commandName);
 			if (!command) return;
 
-			return command.function(interaction);
+			try {
+				return await command.function(interaction);
+			}
+			catch (error) {
+				interaction.client.utils.logError(`[Command Error]: ${interaction.commandName}`, error, interaction.channel);
+			}
 		}
 	},
 };

@@ -1,5 +1,5 @@
 import { Client, Collection, Locale } from 'discord.js';
-import { join, dirname } from 'path';
+import { join, dirname, basename } from 'path';
 import { pathToFileURL } from 'url';
 import { glob } from 'glob';
 import Util from './Util.js';
@@ -72,10 +72,24 @@ export default class extends Client {
 				 */
 				const event = (await import(pathToFileURL(file))).default;
 				if (event.once) {
-					this.once(event.eventName, event.listener);
+					this.once(event.eventName, async (...args) => {
+						try {
+							await event.listener(...args);
+						}
+						catch (error) {
+							this.utils.logError(`[Event Error]: ${basename(file)}`, error);
+						}
+					});
 				}
 				else {
-					this.on(event.eventName, event.listener);
+					this.on(event.eventName, async (...args) => {
+						try {
+							await event.listener(...args);
+						}
+						catch (error) {
+							this.utils.logError(`[Event Error]: ${basename(file)}`, error);
+						}
+					});
 				}
 				this.events.set(event.eventName, event);
 			});

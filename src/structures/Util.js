@@ -1,4 +1,6 @@
+import { Message, TextChannel } from 'discord.js';
 import moment from 'moment';
+import fetch from 'node-fetch';
 
 /**
  * Returns a formatted duration.
@@ -28,4 +30,25 @@ function msToDuration(millisecond) {
 	return output.join(', ');
 }
 
-export default { msToDuration };
+/**
+ * @param {unknown} error
+ * @param {TextChannel} channel
+ */
+async function logError(name, error, channel) {
+	const body = {
+		content: `\`\`\`\n${error}\n\`\`\``,
+		username: name,
+	};
+
+	fetch(process.env.ERROR_CHANNEL_WEBHOOK, {
+		method: 'POST',
+		headers: {
+			'Content-type': 'application/json',
+		},
+		body: JSON.stringify(body),
+	});
+
+	if (channel) await channel.send('An error occured while running that command.');
+}
+
+export default { msToDuration, logError };
