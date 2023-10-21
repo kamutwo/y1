@@ -1,10 +1,10 @@
-import { CommandInteraction, EmbedBuilder, PermissionFlagsBits, version } from 'discord.js';
-import si from 'systeminformation';
+const { CommandInteraction, SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, version } = require('discord.js');
 
-export default {
-	name: 'stat',
-	description: 'gets the bot\'s stat',
-	userPermission: PermissionFlagsBits.ManageGuild,
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('stat')
+		.setDescription('gets the bot\'s stat')
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
 
 	/**
 	 * @param {CommandInteraction} interaction
@@ -12,45 +12,24 @@ export default {
 	function: async (interaction) => {
 		await interaction.deferReply();
 
-		const osInfo = await si.osInfo();
-		const cpu = await si.cpu();
-
 		return interaction.editReply({ embeds: [new EmbedBuilder()
 			.setColor('2B2D31')
 			.addFields([
 				{
-					name: '\\> Uptime',
-					value: `\`${interaction.client.utils.msToDuration(interaction.client.uptime)}\``,
+					name: 'Uptime',
+					value: `\` ${interaction.client.msToDuration(interaction.client.uptime)} \``,
 				},
 				{
-					name: '\\> Node.js',
-					value: `\`${process.version}\``,
-					inline: true,
+					name: 'Node.js Version',
+					value: `\` ${process.version} \``,
 				},
 				{
-					name: '\\> Discord.js',
-					value: `\`${version}\``,
-					inline: true,
+					name: 'Discord.js Version',
+					value: `\` ${version} \``,
 				},
 				{
-					name: '\\> API Latency',
-					value: `\`${Math.round(interaction.client.ws.ping)}ms\``,
-					inline: true,
-				},
-				{
-					name: '\\> Arch',
-					value: `\`${osInfo.arch}\``,
-					inline: true,
-				},
-				{
-					name: '\\> Platform',
-					value: `\`${osInfo.platform}\``,
-					inline: true,
-				},
-				{
-					name: '\\> CPU',
-					value: `\`${cpu.brand}\``,
-					inline: true,
+					name: 'API Latency',
+					value: `\` ${Math.round(interaction.client.ws.ping)}ms \``,
 				},
 			]),
 		] });

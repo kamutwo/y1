@@ -1,15 +1,14 @@
-import BotClient from '../structures/BotClient.js';
+const { Client } = require('discord.js');
 
-export default {
+module.exports = {
 	eventName: 'ready',
 	once: true,
 
 	/**
-	 * @param {BotClient} client
+	 * @param {Client} client
 	 */
 	listener: async (client) => {
-		await client.loadCommands();
-
+		client.loadCommands();
 		console.log(`[Event]: ${client.user?.username} is online.`);
 	},
 };

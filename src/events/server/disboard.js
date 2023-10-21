@@ -1,7 +1,7 @@
-import { Message } from 'discord.js';
-import moment from 'moment';
+const { Message } = require('discord.js');
+const moment = require('moment');
 
-export default {
+module.exports = {
 	eventName: 'messageCreate',
 
 	/**

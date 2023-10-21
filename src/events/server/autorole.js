@@ -1,6 +1,6 @@
-import { GuildMember } from 'discord.js';
+const { GuildMember } = require('discord.js');
 
-export default {
+module.exports = {
 	eventName: 'guildMemberAdd',
 
 	/**

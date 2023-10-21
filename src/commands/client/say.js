@@ -1,18 +1,17 @@
-import { PermissionFlagsBits, SlashCommandStringOption, SlashCommandAttachmentOption, CommandInteraction } from 'discord.js';
+const { SlashCommandBuilder, PermissionFlagsBits, CommandInteraction } = require('discord.js');
 
-export default {
-	name: 'say',
-	description: 'Make the bot say something',
-	options: [
-		new SlashCommandStringOption()
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('say')
+		.setDescription('Make the bot say something')
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
+		.addStringOption((option) => option
 			.setName('message')
-			.setDescription('The message to send.')
-			.setRequired(true),
-		new SlashCommandAttachmentOption()
+			.setDescription('The message to send')
+			.setRequired(true))
+		.addAttachmentOption((option) => option
 			.setName('attachment')
-			.setDescription('Attachment to attach to the message.'),
-	],
-	userPermission: PermissionFlagsBits.ManageMessages,
+			.setDescription('Attachment to attach to the message')),
 
 	/**
 	 * @param {CommandInteraction} interaction

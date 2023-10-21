@@ -1,4 +1,4 @@
-export default {
+module.exports = {
 	eventName: 'interactionCreate',
 
 	/**
@@ -15,7 +15,7 @@ export default {
 				return await command.function(interaction);
 			}
 			catch (error) {
-				interaction.client.utils.logError(`[Command Error]: ${interaction.commandName}`, error, interaction.channel);
+				interaction.client.logError(`[Command Error]: ${interaction.commandName}`, error, interaction.channel);
 			}
 		}
 	},

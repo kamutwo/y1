@@ -1,6 +1,6 @@
-import { Hono } from 'hono';
+const { Hono } = require('hono');
 
 const app = new Hono();
 app.get('/', (c) => c.text('Hello!'));
 
-export default app;
+module.exports = app;
